@@ -30,7 +30,7 @@ After installing the extension, you will be prompted to configure it with your A
 
 2. **Enter Configuration Details**:
     - **API Key**: Your Azure OpenAI API key.
-    - **Endpoint**: Your Azure OpenAI endpoint (e.g., `https://your-azure-endpoint.openai.azure.com/`).
+    - **Endpoint**: Your Azure OpenAI endpoint ( e.g., `https://your-azure-endpoint.openai.azure.com/`).
     - **Deployment Name**: Your deployment name (e.g., `gpt-4-deployment`).
 
 3. **Save Configuration**:
