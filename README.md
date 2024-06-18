@@ -1,8 +1,8 @@
-# Code Generator OpenAI
+# Code Wizard OpenAI
 
 ## Overview
 
-Code Generator OpenAI is a VS Code extension that leverages Azure OpenAI's GPT-4 API to generate code based on user-provided descriptions. This extension aims to assist developers by generating code snippets that can be easily integrated into their projects.
+Code Wizard OpenAI is a VS Code extension that leverages Azure OpenAI's GPT-4 API to generate code based on user-provided descriptions. This extension aims to assist developers by generating code snippets that can be easily integrated into their projects.
 
 ## Features
 
@@ -17,7 +17,7 @@ To install the extension, follow these steps:
 1. Download and install the extension from the Visual Studio Marketplace (link will be provided after publishing).
 2. Alternatively, you can install the `.vsix` file directly by running the following command in the terminal:
     ```bash
-    code --install-extension code-generator-openai-0.0.1.vsix
+    code --install-extension code-wizard-openai-0.0.1.vsix
     ```
 
 ## Configuration
@@ -68,7 +68,7 @@ If you encounter issues, ensure that:
 - You have an active internet connection.
 - The Azure OpenAI service is available and your credentials are valid.
 
-For any other issues, feel free to raise an issue on the [GitHub repository](https://github.com/your-repo/code-generator-openai).
+For any other issues, feel free to raise an issue on the [GitHub repository](https://github.com/loflet/code-wizard).
 
 ## Contributing
 
