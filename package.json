@@ -1,0 +1,77 @@
+{
+  "name": "generatecode",
+  "displayName": "Code Generator OpenAI",
+  "description": "A VS Code extension to generate code using Azure OpenAI's GPT-4 API",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.62.0"
+  },
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.generateCode",
+        "title": "CodeWizard: Generate Code"
+      },
+      {
+        "command": "extension.configureOpenAI",
+        "title": "CodeWizard: Configure"
+      }
+    ],
+    "configuration": {
+            "type": "object",
+            "title": "OpenAI Configuration",
+            "properties": {
+                "openai.apiKey": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Your Azure OpenAI API Key"
+                },
+                "openai.endpoint": {
+                    "type": "string",
+                    "default": "https://your-azure-endpoint.openai.azure.com/",
+                    "description": "Your Azure OpenAI Endpoint"
+                },
+                "openai.deploymentName": {
+                    "type": "string",
+                    "default": "gpt-4o",
+                    "description": "Your Azure OpenAI Deployment Name"
+                },
+                "openai.apiVersion": {
+                    "type": "string",
+                    "default": "2023-07-01-preview",
+                    "description": "Your Azure OpenAI API Version"
+                }
+            }
+        }
+  },
+  "enableTelemetry": false,
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}

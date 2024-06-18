@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Configuration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+    </style>
+</head>
+<body>
+    <h1>OpenAI Configuration</h1>
+    <form id="config-form">
+        <label for="api-key">API Key:</label>
+        <input type="text" id="api-key" name="apiKey" required>
+
+        <label for="endpoint">Endpoint:</label>
+        <input type="text" id="endpoint" name="endpoint" required>
+
+        <label for="deployment-name">Deployment Name:</label>
+        <input type="text" id="deployment-name" name="deploymentName" required>
+
+        <label for="api-version">API Version:</label>
+        <input type="text" id="api-version" name="apiVersion" required>
+
+        <button type="submit">Save</button>
+    </form>
+    <script>
+        const vscode = acquireVsCodeApi();
+        document.getElementById('config-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const apiKey = document.getElementById('api-key').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const deploymentName = document.getElementById('deployment-name').value;
+            const apiVersion = document.getElementById('api-version').value;
+            vscode.postMessage({
+                command: 'saveConfig',
+                apiKey,
+                endpoint,
+                deploymentName
+            });
+        });
+    </script>
+</body>
+</html>
