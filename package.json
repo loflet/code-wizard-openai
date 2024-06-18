@@ -6,6 +6,13 @@
   "engines": {
     "vscode": "^1.90.0"
   },
+  "publisher": "SanketGhorpade",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
+  "pricing": "Free",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
