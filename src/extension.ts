@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             );
 
-            const htmlPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'configuration.html'));
+            const htmlPath = vscode.Uri.file(path.join(context.extensionPath, 'dist', 'configuration.html'));
             fs.readFile(htmlPath.fsPath, 'utf8', (err, data) => {
                 if (err) {
                     vscode.window.showErrorMessage('Unable to load configuration file.');
