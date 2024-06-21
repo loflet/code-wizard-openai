@@ -15,9 +15,14 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             );
 
-            const htmlPath = path.join(context.extensionPath, 'src', 'configuration.html');
-            panel.webview.html = fs.readFileSync(htmlPath, 'utf8');
-
+            const htmlPath = vscode.Uri.file(path.join(context.extensionPath, 'src', 'configuration.html'));
+            fs.readFile(htmlPath.fsPath, 'utf8', (err, data) => {
+                if (err) {
+                    vscode.window.showErrorMessage('Unable to load configuration file.');
+                    return;
+                }
+                panel.webview.html = data;
+            });
             panel.webview.onDidReceiveMessage(async message => {
                 const config = vscode.workspace.getConfiguration('codeWizard');
                 switch (message.type) {

@@ -1,9 +1,24 @@
 # Change Log
 
-All notable changes to the "generatecode" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+
+## [1.0.1] - 2024-06-21
+### Added
+- Support for both OpenAI and Azure OpenAI APIs.
+- User configuration for selecting API type and keys.
+- Progress notification while generating code.
+- Updated documentation
+
+### Fixed
+- Issue with `configuration.html` file not being found after publishing.
+- TypeScript type issues in `extension.ts`.
+
+## [1.0.0] - 2024-06-20
+### Added
+- Initial release of `Code Wizard with OpenAI`.
+- Ability to generate code using OpenAI.
+- Configuration UI for setting API keys.
 
 ## [Unreleased]
-
-- Initial release
+### Added
+- Initial release of `Code Wizard with OpenAI`.
