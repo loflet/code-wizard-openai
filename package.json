@@ -2,7 +2,7 @@
   "name": "code-wizard-openai",
   "displayName": "Code Wizard OpenAI",
   "description": "A VS Code extension to generate code using Azure OpenAI's GPT-4 API",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -27,62 +27,65 @@
       }
     ],
     "configuration": {
-            "type": "object",
-            "title": "OpenAI Configuration",
-            "properties": {
-                "codeWizard.apiType": {
-                  "type": "string",
-                  "enum": ["OpenAI", "AzureOpenAI"],
-                  "default": "OpenAI",
-                  "description": "Select the API to use for code generation"
-                },
-                "codeWizard.openAI.apiKey": {
-                  "type": "string",
-                  "default": "",
-                  "description": "Your OpenAI API key"
-                },
-                "codeWizard.azureOpenAI.apiKey": {
-                  "type": "string",
-                  "default": "",
-                  "description": "Your Azure OpenAI API key"
-                },
-                "codeWizard.azureOpenAI.endpoint": {
-                  "type": "string",
-                  "default": "https://your-azure-endpoint.openai.azure.com/",
-                  "description": "Your Azure OpenAI endpoint"
-                },
-                "codeWizard.azureOpenAI.deploymentName": {
-                  "type": "string",
-                  "default": "gpt-4o",
-                  "description": "Your Azure OpenAI deployment name"
-                },
-                "codeWizard.azureOpenAI.apiVersion": {
-                    "type": "string",
-                    "default": "2023-07-01-preview",
-                    "description": "Your Azure OpenAI API Version"
-                },
-                "openai.apiKey": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Your Azure OpenAI API Key"
-                },
-                "openai.endpoint": {
-                    "type": "string",
-                    "default": "https://your-azure-endpoint.openai.azure.com/",
-                    "description": "Your Azure OpenAI Endpoint"
-                },
-                "openai.deploymentName": {
-                    "type": "string",
-                    "default": "gpt-4o",
-                    "description": "Your Azure OpenAI Deployment Name"
-                },
-                "openai.apiVersion": {
-                    "type": "string",
-                    "default": "2023-07-01-preview",
-                    "description": "Your Azure OpenAI API Version"
-                }
-            }
+      "type": "object",
+      "title": "OpenAI Configuration",
+      "properties": {
+        "codeWizard.apiType": {
+          "type": "string",
+          "enum": [
+            "OpenAI",
+            "AzureOpenAI"
+          ],
+          "default": "OpenAI",
+          "description": "Select the API to use for code generation"
+        },
+        "codeWizard.openAI.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your OpenAI API key"
+        },
+        "codeWizard.azureOpenAI.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Azure OpenAI API key"
+        },
+        "codeWizard.azureOpenAI.endpoint": {
+          "type": "string",
+          "default": "https://your-azure-endpoint.openai.azure.com/",
+          "description": "Your Azure OpenAI endpoint"
+        },
+        "codeWizard.azureOpenAI.deploymentName": {
+          "type": "string",
+          "default": "gpt-4o",
+          "description": "Your Azure OpenAI deployment name"
+        },
+        "codeWizard.azureOpenAI.apiVersion": {
+          "type": "string",
+          "default": "2023-07-01-preview",
+          "description": "Your Azure OpenAI API Version"
+        },
+        "openai.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Azure OpenAI API Key"
+        },
+        "openai.endpoint": {
+          "type": "string",
+          "default": "https://your-azure-endpoint.openai.azure.com/",
+          "description": "Your Azure OpenAI Endpoint"
+        },
+        "openai.deploymentName": {
+          "type": "string",
+          "default": "gpt-4o",
+          "description": "Your Azure OpenAI Deployment Name"
+        },
+        "openai.apiVersion": {
+          "type": "string",
+          "default": "2023-07-01-preview",
+          "description": "Your Azure OpenAI API Version"
         }
+      }
+    }
   },
   "enableTelemetry": false,
   "scripts": {
