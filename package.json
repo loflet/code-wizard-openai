@@ -2,22 +2,18 @@
   "name": "code-wizard-openai",
   "displayName": "Code Wizard OpenAI",
   "description": "A VS Code extension to generate code using Azure OpenAI's GPT-4 API",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.90.0"
   },
   "publisher": "SanketGhorpade",
   "icon": "icon.png",
-  "galleryBanner": {
-    "color": "#eff1f3",
-    "theme": "dark"
-  },
   "pricing": "Free",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "files": [
         "dist/**/*.js",
-        "src/configuration.html",
+        "dist/*",
         "images/*",
         "CHANGELOG.md"
       ],

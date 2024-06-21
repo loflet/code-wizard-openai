@@ -19,7 +19,7 @@ To install the extension, follow these steps:
 1. Download and install the extension from the Visual Studio Marketplace (link will be provided after publishing).
 2. Alternatively, you can install the `.vsix` file directly by running the following command in the terminal:
     ```bash
-    code --install-extension code-wizard-openai-1.0.1.vsix
+    code --install-extension code-wizard-openai-1.0.3.vsix
     ```
 
 ## Configuration
