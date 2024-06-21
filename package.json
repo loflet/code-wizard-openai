@@ -2,19 +2,25 @@
   "name": "code-wizard-openai",
   "displayName": "Code Wizard OpenAI",
   "description": "A VS Code extension to generate code using Azure OpenAI's GPT-4 API",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.90.0"
   },
   "publisher": "SanketGhorpade",
   "icon": "icon.png",
   "galleryBanner": {
-    "color": "#C80000",
+    "color": "#eff1f3",
     "theme": "dark"
   },
   "pricing": "Free",
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "files": [
+        "dist/**/*.js",
+        "src/configuration.html",
+        "images/*",
+        "CHANGELOG.md"
+      ],
   "contributes": {
     "commands": [
       {
@@ -119,5 +125,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/loflet/code-wizard-openai.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/loflet/code-wizard-openai/issues"
+  },
+  "homepage": "https://github.com/loflet/code-wizard-openai#readme"
 }
