@@ -19,14 +19,33 @@ export function activate(context: vscode.ExtensionContext) {
             panel.webview.html = fs.readFileSync(htmlPath, 'utf8');
 
             panel.webview.onDidReceiveMessage(async message => {
-                if (message.command === 'saveConfig') {
-                    const configuration = vscode.workspace.getConfiguration();
-                    await configuration.update('openai.apiKey', message.apiKey, vscode.ConfigurationTarget.Global);
-                    await configuration.update('openai.endpoint', message.endpoint, vscode.ConfigurationTarget.Global);
-                    await configuration.update('openai.deploymentName', message.deploymentName, vscode.ConfigurationTarget.Global);
-                    await configuration.update('openai.apiVersion', message.apiVersion, vscode.ConfigurationTarget.Global);
-                    vscode.window.showInformationMessage('OpenAI configuration saved successfully!');
-                    panel.dispose();
+                const config = vscode.workspace.getConfiguration('codeWizard');
+                switch (message.type) {
+                    case 'requestConfig':
+                        panel.webview.postMessage({
+                            type: 'loadConfig',
+                            config: {
+                                apiType: config.get<string>('apiType'),
+                                openAIKey: config.get<string>('openAI.apiKey'),
+                                azureOpenAIKey: config.get<string>('azureOpenAI.apiKey'),
+                                azureOpenAIEndpoint: config.get<string>('azureOpenAI.endpoint'),
+                                azureOpenAIDeploymentName: config.get<string>('azureOpenAI.deploymentName'),
+                                azureOpenAIAPIVersion: config.get<string>('azureOpenAI.apiVersion')
+                            }
+                        });
+                        break;
+                    case 'saveConfig':
+                        await config.update('apiType', message.apiType, vscode.ConfigurationTarget.Global);
+                        if (message.apiType === 'OpenAI') {
+                            await config.update('openAI.apiKey', message.openAIKey, vscode.ConfigurationTarget.Global);
+                        } else if (message.apiType === 'AzureOpenAI') {
+                            await config.update('azureOpenAI.apiKey', message.azureOpenAIKey, vscode.ConfigurationTarget.Global);
+                            await config.update('azureOpenAI.endpoint', message.azureOpenAIEndpoint, vscode.ConfigurationTarget.Global);
+                            await config.update('azureOpenAI.deploymentName', message.azureOpenAIDeploymentName, vscode.ConfigurationTarget.Global);
+                            await config.update('azureOpenAI.apiVersion', message.azureOpenAIAPIVersion, vscode.ConfigurationTarget.Global);
+                        }
+                        vscode.window.showInformationMessage('Configuration saved successfully!');
+                        break;
                 }
             });
         })
@@ -37,27 +56,77 @@ export function activate(context: vscode.ExtensionContext) {
             // Get the current text editor
             const editor = vscode.window.activeTextEditor;
             if (!editor) {
-                return; // No open text editor
+                vscode.window.showInformationMessage('No active editor found.');
+                return;
             }
 
             // Prompt the user to enter the code description
             const prompt = await vscode.window.showInputBox({ prompt: 'Describe the code you want to generate' });
             if (!prompt) {
-                return; // User canceled the input
-            }
-
-            // Get the OpenAI settings from the configuration
-            const configuration = vscode.workspace.getConfiguration();
-            const AZURE_OPENAI_API_KEY = configuration.get<string>('openai.apiKey');
-            const AZURE_OPENAI_ENDPOINT = configuration.get<string>('openai.endpoint');
-            const DEPLOYMENT_NAME = configuration.get<string>('openai.deploymentName');
-            const API_VERSION = configuration.get<string>('openai.apiVersion');
-
-            if (!AZURE_OPENAI_API_KEY || !AZURE_OPENAI_ENDPOINT || !DEPLOYMENT_NAME || !API_VERSION) {
-                vscode.window.showErrorMessage('OpenAI API Key, Endpoint, or Deployment Name is not set. Please configure these in the settings.');
+                vscode.window.showInformationMessage('No description provided.');
                 return;
             }
 
+            const config = vscode.workspace.getConfiguration('codeWizard');
+            const apiType = config.get<string>('apiType');
+            let API_KEY: string | undefined, ENDPOINT: string | undefined, DEPLOYMENT_NAME: string | undefined, API_VERSION: string | undefined;
+            let REQUEST_BODY: any;
+            let API_URL: string;
+            let HEADERS: any;
+
+            const systemprompt = 'You are Code Guru, User will ask you code-related queries. Please respond only with the code that can be directly copy-pasted, without any formatting or language-specific tags.';
+
+            if (apiType === 'OpenAI') {
+                API_KEY = config.get<string>('openAI.apiKey');
+                if (!API_KEY) {
+                    vscode.window.showErrorMessage('OpenAI API key is not configured.');
+                    return;
+                }
+                // Defining API URL and body
+                API_URL = 'https://api.openai.com/v1/chat/completions';
+                REQUEST_BODY = {
+                    model: 'gpt-4o',
+                    messages: [
+                        { role: 'system', content: systemprompt },
+                        { role: 'user', content: prompt }
+                    ],
+                    max_tokens: 2000,
+                    temperature: 0.7,
+                };
+                HEADERS = {
+                    'Authorization': `Bearer ${API_KEY}`,
+                    'Content-Type': 'application/json'
+                };
+
+            } else if (apiType === 'AzureOpenAI') {
+                API_KEY = config.get<string>('azureOpenAI.apiKey');
+                ENDPOINT = config.get<string>('azureOpenAI.endpoint');
+                DEPLOYMENT_NAME = config.get<string>('azureOpenAI.deploymentName');
+                API_VERSION = config.get<string>('azureOpenAI.apiVersion');
+                if (!API_KEY || !ENDPOINT || !DEPLOYMENT_NAME || !API_VERSION) {
+                    vscode.window.showErrorMessage('Azure OpenAI configuration is incomplete.');
+                    return;
+                }
+                // Defining API URL and body
+                API_URL = `${ENDPOINT}/openai/deployments/${DEPLOYMENT_NAME}/chat/completions?api-version=${API_VERSION}`;
+                REQUEST_BODY = {
+                    messages: [
+                        { role: 'system', content: systemprompt },
+                        { role: 'user', content: prompt }
+                    ],
+                    max_tokens: 2000,
+                    temperature: 0.7,
+                };
+                HEADERS = {
+                    'api-key': API_KEY,
+                    'Content-Type': 'application/json'
+                };
+
+            } else {
+                vscode.window.showErrorMessage('Invalid API type selected.');
+                return;
+            }
+            
             // Show progress notification
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
@@ -67,24 +136,10 @@ export function activate(context: vscode.ExtensionContext) {
                 progress.report({ increment: 0 });
 
                 try {
-                    // Make a request to the Azure OpenAI Chat Completion API
-                    const response = await axios.post(
-                        `${AZURE_OPENAI_ENDPOINT}/openai/deployments/${DEPLOYMENT_NAME}/chat/completions?api-version=${API_VERSION}`,
-                        {
-                            messages: [
-                                { role: 'system', content: 'You are Code Guru, User will ask you code-related queries. Please respond only with the code that can be directly copy-pasted, without any formatting or language-specific tags.' },
-                                { role: 'user', content: prompt }
-                            ],
-                            max_tokens: 2000,
-                            temperature: 0.7,
-                        },
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'api-key': AZURE_OPENAI_API_KEY
-                            }
-                        }
-                    );
+                    // Make an API call
+                    const response = await axios.post(API_URL, REQUEST_BODY, {
+                        headers: HEADERS
+                    });
 
                     // Get the generated code from the response
                     const generatedCode = response.data.choices[0].message.content;
@@ -95,6 +150,7 @@ export function activate(context: vscode.ExtensionContext) {
                         editBuilder.insert(position, generatedCode);
                     });
 
+                    vscode.window.showInformationMessage('Code generation successful!');
                 } catch (error) {
                     if (error instanceof Error) {
                         vscode.window.showErrorMessage('Failed to generate code: ' + error.message);

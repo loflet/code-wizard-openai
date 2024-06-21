@@ -22,18 +22,25 @@ To install the extension, follow these steps:
 
 ## Configuration
 
-After installing the extension, you will be prompted to configure it with your Azure OpenAI API credentials through a user-friendly UI.
+After installing the extension, you will be prompted to configure it with your API credentials through a user-friendly UI.
 
 1. **Open Configuration UI**:
     - If the API key is not set, the configuration UI will open automatically.
     - You can also open the configuration UI manually by running the command `CodeWizard: Configure` from the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P`).
 
-2. **Enter Configuration Details**:
-    - **API Key**: Your Azure OpenAI API key.
-    - **Endpoint**: Your Azure OpenAI endpoint ( e.g., `https://your-azure-endpoint.openai.azure.com/`).
-    - **Deployment Name**: Your deployment name (e.g., `gpt-4-deployment`).
+2. **Select API Type**:
+    - Choose between `OpenAI` and `Azure OpenAI`.
 
-3. **Save Configuration**:
+3. **Enter Configuration Details**:
+    - For `OpenAI`:
+        - **API Key**: Your OpenAI API key.
+    - For `Azure OpenAI`:
+        - **API Key**: Your Azure OpenAI API key.
+        - **Endpoint**: Your Azure OpenAI endpoint (e.g., `https://your-azure-endpoint.openai.azure.com/`).
+        - **Deployment Name**: Your deployment name (e.g., `gpt-4-deployment`).
+        - **API Version**: Your OpenAI API Version (e.g., `2023-07-01-preview`).
+
+4. **Save Configuration**:
     - Fill in the required fields and click the "Save" button.
     - A confirmation message will appear once the configuration is saved successfully.
 
@@ -80,4 +87,4 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 ## Acknowledgements
 
-Special thanks to the developers of the VS Code extension API and the Azure OpenAI team for providing the API used in this extension.
+Special thanks to the developers of the VS Code extension API and the Azure OpenAI team for providing the API used in this extension. This extension was developed with the assistance of ChatGPT, which helped in accelerating the development process.
