@@ -1,6 +1,8 @@
 # Change Log
 
-
+## [1.0.2] - 2024-06-21
+### Bug Fix
+- Updated the publishing banner
 
 ## [1.0.1] - 2024-06-21
 ### Added
