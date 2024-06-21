@@ -30,6 +30,37 @@
             "type": "object",
             "title": "OpenAI Configuration",
             "properties": {
+                "codeWizard.apiType": {
+                  "type": "string",
+                  "enum": ["OpenAI", "AzureOpenAI"],
+                  "default": "OpenAI",
+                  "description": "Select the API to use for code generation"
+                },
+                "codeWizard.openAI.apiKey": {
+                  "type": "string",
+                  "default": "",
+                  "description": "Your OpenAI API key"
+                },
+                "codeWizard.azureOpenAI.apiKey": {
+                  "type": "string",
+                  "default": "",
+                  "description": "Your Azure OpenAI API key"
+                },
+                "codeWizard.azureOpenAI.endpoint": {
+                  "type": "string",
+                  "default": "https://your-azure-endpoint.openai.azure.com/",
+                  "description": "Your Azure OpenAI endpoint"
+                },
+                "codeWizard.azureOpenAI.deploymentName": {
+                  "type": "string",
+                  "default": "gpt-4o",
+                  "description": "Your Azure OpenAI deployment name"
+                },
+                "codeWizard.azureOpenAI.apiVersion": {
+                    "type": "string",
+                    "default": "2023-07-01-preview",
+                    "description": "Your Azure OpenAI API Version"
+                },
                 "openai.apiKey": {
                     "type": "string",
                     "default": "",
