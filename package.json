@@ -116,7 +116,7 @@
     "@vscode/test-electron": "^2.4.0"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.31.0"
   },
   "repository": {
     "type": "git",
